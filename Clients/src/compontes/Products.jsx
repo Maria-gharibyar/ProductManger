@@ -2,14 +2,15 @@ import axios from 'axios'
 import { useState } from 'react'
 
 
-const Products=()=>{
+const Products=(props)=>{
+    const{product,setprodcuts}=props
         const[title,setTilte]=useState("")
         const[price,setPrice]=useState("")
         const[description,setDescription]=useState("")
 
         const HandelrProducts=(e)=>{
             e.preventDefault();
-            axios.post('http://localhost:8000/api/products', {
+            axios.post("http://localhost:8000/api/product", {
                 title: title,
                 price: price,
                  description: description     // this is shortcut syntax for lastName: lastName
@@ -17,6 +18,10 @@ const Products=()=>{
             .then(res=>{
                 console.log(res); // always console log to get used to tracking your data!
                 console.log(res.data);
+                setprodcuts([...product,res.data]);
+                setTilte("");
+                setPrice("");
+                setDescription("")
             })
             .catch(err=>console.log(err))
     }
